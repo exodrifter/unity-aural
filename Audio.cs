@@ -162,7 +162,7 @@ namespace Exodrifter.Aural
 		/// </summary>
 		/// <param name="clips">The clips to stop.</param>
 		/// <param name="soundbanks">The soundbanks to stop.</param>
-		public static void StopAllExcept(List<AudioClip> clips, List<Soundbank> soundbanks)
+		public static void StopAllExcept(IEnumerable<AudioClip> clips, IEnumerable<Soundbank> soundbanks)
 		{
 			var instanceIds = clips
 				.Select(x => x?.GetInstanceID())
