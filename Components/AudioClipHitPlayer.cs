@@ -4,6 +4,7 @@ namespace Exodrifter.Aural
 {
 	public class AudioClipHitPlayer : AudioPlayer
 	{
+		public AudioClip Clip { get { return clip; } }
 		[SerializeField]
 		private AudioClip clip = default;
 

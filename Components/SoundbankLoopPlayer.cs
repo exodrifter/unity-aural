@@ -4,6 +4,7 @@ namespace Exodrifter.Aural
 {
 	public class SoundbankLoopPlayer : AudioPlayer
 	{
+		public Soundbank Soundbank { get { return soundbank; } }
 		[SerializeField]
 		private Soundbank soundbank = null;
 
