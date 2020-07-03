@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Exodrifter.Aural
@@ -12,6 +13,10 @@ namespace Exodrifter.Aural
 	{
 		[SerializeField]
 		private AudioClip clip;
+		[SerializeField]
+		private VoiceParams currentParams;
+		[SerializeField]
+		private Coroutine loop;
 
 		private Voice source;
 
@@ -21,16 +26,38 @@ namespace Exodrifter.Aural
 
 		internal override void Trigger(VoiceParams param)
 		{
+			currentParams = param;
+
 			// Start playback of the audio
 			if (source == null)
 			{
-				source = SpawnVoice();
-				source.Play(clip, true, param);
+				if (param.HasLeftSilence())
+				{
+					if (loop == null)
+					{
+						loop = StartCoroutine(Loop());
+					}
+				}
+				else
+				{
+					source = SpawnVoice();
+					source.Play(clip, true, currentParams);
+				}
 			}
 			// Apply the new parameters
 			else
 			{
-				source.Apply(param);
+				source.Apply(currentParams);
+			}
+		}
+
+		private IEnumerator Loop()
+		{
+			while (true)
+			{
+				source = SpawnVoice();
+				source.Play(clip, false, currentParams);
+				yield return new WaitForSeconds(source.RemainingTime);
 			}
 		}
 

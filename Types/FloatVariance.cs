@@ -36,6 +36,11 @@ namespace Exodrifter.Aural
 			return new FloatVariance(number, variance);
 		}
 
+		public bool IsConstant()
+		{
+			return variance == 0;
+		}
+
 		public float GenerateValue()
 		{
 			return Random.Range(number - variance, number + variance);

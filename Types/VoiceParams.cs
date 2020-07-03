@@ -57,6 +57,14 @@ namespace Exodrifter.Aural
 			return leftSilencePadding.GenerateValue();
 		}
 
+		public bool HasLeftSilence()
+		{
+			var leftSilenceIsZero =
+					leftSilencePadding.IsConstant() &&
+					leftSilencePadding.GenerateValue() == 0;
+			return !leftSilenceIsZero;
+		}
+
 		public float GetPanStereo()
 		{
 			return panStereo.GenerateValue();
