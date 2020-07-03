@@ -19,6 +19,8 @@ namespace Exodrifter.Aural
 		[SerializeField]
 		private FloatVariance leftSilencePadding = FloatVariance.Const(0.0f);
 		[SerializeField]
+		private FloatVariance rightSilencePadding = FloatVariance.Const(0.0f);
+		[SerializeField]
 		private FloatVariance panStereo = FloatVariance.Const(0.0f);
 		[SerializeField]
 		private FloatVariance spatialBlend = FloatVariance.Const(0.0f);
@@ -31,6 +33,7 @@ namespace Exodrifter.Aural
 			pitch = f.pitch;
 			normalizedTime = f.normalizedTime;
 			leftSilencePadding = f.leftSilencePadding;
+			rightSilencePadding = f.rightSilencePadding;
 			panStereo = f.panStereo;
 			spatialBlend = f.spatialBlend;
 			mixerGroup = f.mixerGroup;
@@ -65,6 +68,24 @@ namespace Exodrifter.Aural
 			return !leftSilenceIsZero;
 		}
 
+		public float GetRightSilenceLength()
+		{
+			return rightSilencePadding.GenerateValue();
+		}
+
+		public bool HasRightSilence()
+		{
+			var rightSilenceIsZero =
+					rightSilencePadding.IsConstant() &&
+					rightSilencePadding.GenerateValue() == 0;
+			return !rightSilenceIsZero;
+		}
+
+		public bool HasSilencePadding()
+		{
+			return HasLeftSilence() || HasRightSilence();
+		}
+
 		public float GetPanStereo()
 		{
 			return panStereo.GenerateValue();
@@ -92,6 +113,7 @@ namespace Exodrifter.Aural
 			internal FloatVariance pitch;
 			internal FloatVariance normalizedTime;
 			internal FloatVariance leftSilencePadding;
+			internal FloatVariance rightSilencePadding;
 			internal FloatVariance panStereo;
 			internal FloatVariance spatialBlend;
 			internal AudioMixerGroup mixerGroup;
@@ -102,6 +124,7 @@ namespace Exodrifter.Aural
 				pitch = p?.pitch ?? FloatVariance.Variance(1.0f, 0.1f);
 				normalizedTime = p?.normalizedTime ?? FloatVariance.Const(0.0f);
 				leftSilencePadding = p?.leftSilencePadding ?? FloatVariance.Const(0.0f);
+				rightSilencePadding = p?.rightSilencePadding ?? FloatVariance.Const(0.0f);
 				panStereo = p?.panStereo ?? FloatVariance.Const(0.0f);
 				spatialBlend = p?.spatialBlend ?? FloatVariance.Const(0.0f);
 				mixerGroup = p?.mixerGroup;
@@ -159,6 +182,22 @@ namespace Exodrifter.Aural
 			public Factory LeftSilencePadding(FloatVariance leftSilencePadding)
 			{
 				this.leftSilencePadding = leftSilencePadding;
+				return this;
+			}
+
+			/// <summary>
+			/// The amount of silence in seconds that should be added to the
+			/// end of a voice before it is destroyed. Useful if this voice will
+			/// be looped and you want to insert space between the loops after
+			/// it plays once.
+			/// </summary>
+			/// <param name="rightSilencePadding">
+			/// The amount of silence in seconds.
+			/// </param>
+			/// <returns>The factory, for chaining.</returns>
+			public Factory RightSilencePadding(FloatVariance rightSilencePadding)
+			{
+				this.rightSilencePadding = rightSilencePadding;
 				return this;
 			}
 

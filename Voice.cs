@@ -82,6 +82,7 @@ namespace Exodrifter.Aural
 			volume = new AutomatedParameter(param.GetVolume(), 0.25f);
 			pitch = new AutomatedParameter(param.GetPitch(), 0.25f);
 			remainingLeftSilence = param.GetLeftSilenceLength();
+			remainingRightSilence = param.GetRightSilenceLength();
 			panStereo = new AutomatedParameter(param.GetPanStereo(), 0.25f);
 			spatialBlend = new AutomatedParameter(param.GetSpatialBlend(), 0.25f);
 
@@ -119,6 +120,9 @@ namespace Exodrifter.Aural
 		[SerializeField]
 		private float remainingLeftSilence;
 
+		[SerializeField]
+		private float remainingRightSilence;
+
 		/// <summary>
 		/// Returns the amount of remaining time left before the clip finishes
 		/// playing.
@@ -132,7 +136,9 @@ namespace Exodrifter.Aural
 					return 0;
 				}
 				var remainingClipLength = Source.clip.length - Source.time;
-				return remainingLeftSilence + remainingClipLength;
+				return remainingLeftSilence
+					+ remainingClipLength
+					+ remainingRightSilence;
 			}
 		}
 
@@ -156,10 +162,22 @@ namespace Exodrifter.Aural
 				}
 			}
 
+			// Wait until there is no silence remaining after playing the audio
+			if (remainingLeftSilence == 0
+				&& !Source.isPlaying
+				&& remainingRightSilence > 0)
+			{
+				remainingRightSilence -= Time.deltaTime;
+				if (remainingRightSilence < 0)
+				{
+					remainingRightSilence = 0;
+				}
+			}
+
 			// If we can no longer hear this voice and there is no more silence
 			// to generate, destroy it.
 			var audible = Source.isPlaying && Source.volume != 0;
-			if (remainingLeftSilence <= 0 && !audible)
+			if (remainingLeftSilence <= 0 && remainingRightSilence <= 0 && !audible)
 			{
 				Destroy(gameObject);
 			}

@@ -22,7 +22,7 @@ namespace Exodrifter.Aural
 
 		#region Channel
 
-		protected override bool DestroyWhenNoVoicesExist { get { return true; } }
+		protected override bool DestroyWhenNoVoicesExist { get { return false; } }
 
 		internal override void Trigger(VoiceParams param)
 		{
@@ -31,7 +31,7 @@ namespace Exodrifter.Aural
 			// Start playback of the audio
 			if (source == null)
 			{
-				if (param.HasLeftSilence())
+				if (param.HasSilencePadding())
 				{
 					if (loop == null)
 					{
