@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- The type of the package has been set to "library"
+
+### Fixed
+- Added meta files that the Unity package manager specification expects to exist
+
 ## [0.0.1]
 ### Added
 - The project has been restructured to follow the Unity package specification,
