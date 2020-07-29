@@ -1,0 +1,16 @@
+{
+	"name": "space.exodrifter.aural",
+	"version": "0.0.1",
+	"displayName": "Aural",
+	"description": "A simple, script-friendly audio framework.",
+	"unity": "2020.1",
+	"unityRelease": "0f1",
+	"keywords": [
+		"audio"
+	],
+	"author": {
+		"name": "exodrifter",
+		"email": "exodrifter@gmail.com",
+		"url": "https://exodrifter.space"
+	}
+}
