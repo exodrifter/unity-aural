@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Exodrifter.Aural
 {
-	[CreateAssetMenu(fileName = "New Soundbank", menuName = "Anchor/Soundbank")]
+	[CreateAssetMenu(fileName = "New Soundbank", menuName = "Aural/Soundbank")]
 	public class Soundbank : ScriptableObject
 	{
 		[SerializeField]
