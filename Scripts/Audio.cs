@@ -34,6 +34,20 @@ namespace Exodrifter.Aural
 			return children;
 		}
 
+		internal static List<Channel> AllChannelsExcept(IEnumerable<AudioClip> clips, IEnumerable<Soundbank> soundbanks)
+		{
+			var instanceIds = clips
+				.Select(x => x?.GetInstanceID())
+				.Union(soundbanks.Select(x => x?.GetInstanceID()))
+				.Where(x => x.HasValue)
+				.Select(x => x.Value.ToString())
+				.ToList();
+
+			return AllChannels()
+				.Where(x => !instanceIds.Contains(x.name.Split()[1]))
+				.ToList();
+		}
+
 		#endregion
 
 		#region Hits
@@ -164,23 +178,61 @@ namespace Exodrifter.Aural
 		/// <param name="soundbanks">The soundbanks to stop.</param>
 		public static void StopAllExcept(IEnumerable<AudioClip> clips, IEnumerable<Soundbank> soundbanks)
 		{
-			var instanceIds = clips
-				.Select(x => x?.GetInstanceID())
-				.Union(soundbanks.Select(x => x?.GetInstanceID()))
-				.Where(x => x.HasValue)
-				.Select(x => x.Value.ToString())
-				.ToList();
-
-			// Stop every audio not in the list of instance ids to keep
-			var toRemove = new List<int>();
-			foreach (var channel in AllChannels())
+			foreach (var channel in AllChannelsExcept(clips, soundbanks))
 			{
-				if (instanceIds.Contains(channel.name.Split()[1]))
-				{
-					continue;
-				}
-
 				channel.Volume = 0;
+			}
+		}
+
+		#endregion
+
+		#region Halt
+
+		public static void Halt(AudioClip clip)
+		{
+			var hit = FindChannel<AudioClipHit>(clip);
+			if (hit != null)
+			{
+				Object.Destroy(hit.gameObject);
+			}
+
+			var loop = FindChannel<AudioClipLoop>(clip);
+			if (loop != null)
+			{
+				Object.Destroy(loop.gameObject);
+			}
+		}
+
+		public static void Halt(Soundbank soundbank)
+		{
+			var hit = FindChannel<SoundbankHit>(soundbank);
+			if (hit != null)
+			{
+				Object.Destroy(hit.gameObject);
+			}
+
+			var loop = FindChannel<SoundbankLoop>(soundbank);
+			if (loop != null)
+			{
+				Object.Destroy(loop.gameObject);
+			}
+		}
+
+		public static void HaltAll()
+		{
+			AllChannels().ForEach(x => Object.Destroy(x.gameObject));
+		}
+
+		/// <summary>
+		/// Stops all audio except for the specified audio.
+		/// </summary>
+		/// <param name="clips">The clips to stop.</param>
+		/// <param name="soundbanks">The soundbanks to stop.</param>
+		public static void HaltAllExcept(IEnumerable<AudioClip> clips, IEnumerable<Soundbank> soundbanks)
+		{
+			foreach (var channel in AllChannelsExcept(clips, soundbanks))
+			{
+				Object.Destroy(channel.gameObject);
 			}
 		}
 
