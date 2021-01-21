@@ -15,7 +15,7 @@ namespace Exodrifter.Aural
 		private Soundbank soundbank;
 
 		[SerializeField]
-		private VoiceParams currentParams;
+		private TransientParams currentParams;
 		[SerializeField]
 		private Coroutine loop;
 
@@ -23,7 +23,7 @@ namespace Exodrifter.Aural
 
 		protected override bool DestroyWhenNoVoicesExist { get { return false; } }
 
-		internal override void Trigger(VoiceParams param)
+		internal override void Trigger(TransientParams param)
 		{
 			currentParams = param;
 
@@ -37,7 +37,7 @@ namespace Exodrifter.Aural
 		{
 			while (true)
 			{
-				var source = SpawnVoice();
+				var source = SpawnTransient();
 				source.Play(soundbank.GetRandomClip(), false, currentParams);
 				yield return new WaitForSeconds(source.RemainingTime);
 			}

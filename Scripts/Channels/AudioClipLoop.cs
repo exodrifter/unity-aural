@@ -14,17 +14,17 @@ namespace Exodrifter.Aural
 		[SerializeField]
 		private AudioClip clip;
 		[SerializeField]
-		private VoiceParams currentParams;
+		private TransientParams currentParams;
 		[SerializeField]
 		private Coroutine loop;
 
-		private Voice source;
+		private Transient source;
 
 		#region Channel
 
 		protected override bool DestroyWhenNoVoicesExist { get { return false; } }
 
-		internal override void Trigger(VoiceParams param)
+		internal override void Trigger(TransientParams param)
 		{
 			currentParams = param;
 
@@ -40,7 +40,7 @@ namespace Exodrifter.Aural
 				}
 				else
 				{
-					source = SpawnVoice();
+					source = SpawnTransient();
 					source.Play(clip, true, currentParams);
 				}
 			}
@@ -55,7 +55,7 @@ namespace Exodrifter.Aural
 		{
 			while (true)
 			{
-				source = SpawnVoice();
+				source = SpawnTransient();
 				source.Play(clip, false, currentParams);
 				yield return new WaitForSeconds(source.RemainingTime);
 			}

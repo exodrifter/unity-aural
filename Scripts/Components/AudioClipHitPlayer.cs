@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Exodrifter.Aural
 {
@@ -13,14 +14,15 @@ namespace Exodrifter.Aural
 		/// this number of voices. If zero, there is no limit.
 		/// </summary>
 		[SerializeField]
-		private int voiceLimit = 0;
+		[FormerlySerializedAs("voiceLimit")]
+		private int limit = 0;
 
 		private void Start()
 		{
-			if (voiceLimit > 0)
+			if (limit > 0)
 			{
 				var channel = Audio.FindChannel<AudioClipHit>(clip);
-				if ((channel?.VoiceCount ?? 0) < voiceLimit)
+				if ((channel?.TransientCount ?? 0) < limit)
 				{
 					Audio.Hit(clip, param, transform.position);
 				}

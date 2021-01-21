@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Exodrifter.Aural
 {
 	/// <summary>
-	/// A channel is a collection of voices for one audio asset.
+	/// A channel is a collection of transients for one audio asset.
 	/// </summary>
 	[AddComponentMenu("")]
 	[Serializable]
@@ -27,7 +27,7 @@ namespace Exodrifter.Aural
 
 		#region Internal
 
-		internal int VoiceCount { get { return transform.childCount; } }
+		internal int TransientCount { get { return transform.childCount; } }
 
 		/// <summary>
 		/// True if the channel should be eagerly destroyed when no voices are
@@ -53,13 +53,13 @@ namespace Exodrifter.Aural
 		/// <summary>
 		/// Used by implementing channels to spawn new voices.
 		/// </summary>
-		private protected Voice SpawnVoice()
+		private protected Transient SpawnTransient()
 		{
-			var go = new GameObject("Voice");
+			var go = new GameObject("Transient");
 			go.transform.parent = transform;
 			go.transform.localPosition = Vector3.zero;
 
-			return go.AddComponent<Voice>();
+			return go.AddComponent<Transient>();
 		}
 
 		/// <summary>
@@ -93,7 +93,7 @@ namespace Exodrifter.Aural
 		/// <param name="param">
 		/// The new parameters to use for the sound.
 		/// </param>
-		internal abstract void Trigger(VoiceParams param);
+		internal abstract void Trigger(TransientParams param);
 
 		internal void Update()
 		{

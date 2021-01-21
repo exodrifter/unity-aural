@@ -54,10 +54,10 @@ namespace Exodrifter.Aural
 
 		public static void Hit(AudioClip clip)
 		{
-			Hit(clip, VoiceParams.Variable2D());
+			Hit(clip, TransientParams.Variable2D());
 		}
 
-		public static void Hit(AudioClip clip, VoiceParams param, Vector3? pos = null)
+		public static void Hit(AudioClip clip, TransientParams param, Vector3? pos = null)
 		{
 			// If there is nothing to play, we don't need to do anything.
 			if (clip == null)
@@ -73,10 +73,10 @@ namespace Exodrifter.Aural
 
 		public static void Hit(Soundbank soundbank)
 		{
-			Hit(soundbank, VoiceParams.Variable2D());
+			Hit(soundbank, TransientParams.Variable2D());
 		}
 
-		public static void Hit(Soundbank soundbank, VoiceParams param, Vector3? pos = null)
+		public static void Hit(Soundbank soundbank, TransientParams param, Vector3? pos = null)
 		{
 			// If there is nothing to play, we don't need to do anything.
 			if (soundbank == null)
@@ -96,10 +96,10 @@ namespace Exodrifter.Aural
 
 		public static void Loop(AudioClip clip)
 		{
-			Loop(clip, VoiceParams.Const2D());
+			Loop(clip, TransientParams.Const2D());
 		}
 
-		public static void Loop(AudioClip clip, VoiceParams param, Vector3? pos = null)
+		public static void Loop(AudioClip clip, TransientParams param, Vector3? pos = null)
 		{
 			// If there is nothing to play, we don't need to do anything.
 			if (clip == null)
@@ -115,10 +115,10 @@ namespace Exodrifter.Aural
 
 		public static void Loop(Soundbank soundbank)
 		{
-			Loop(soundbank, VoiceParams.Const2D());
+			Loop(soundbank, TransientParams.Const2D());
 		}
 
-		public static void Loop(Soundbank soundbank, VoiceParams param, Vector3? pos = null)
+		public static void Loop(Soundbank soundbank, TransientParams param, Vector3? pos = null)
 		{
 			// If there is nothing to play, we don't need to do anything.
 			if (soundbank == null)

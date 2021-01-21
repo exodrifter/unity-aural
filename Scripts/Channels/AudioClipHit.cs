@@ -17,9 +17,9 @@ namespace Exodrifter.Aural
 
 		protected override bool DestroyWhenNoVoicesExist { get { return true; } }
 
-		internal override void Trigger(VoiceParams param)
+		internal override void Trigger(TransientParams param)
 		{
-			var source = SpawnVoice();
+			var source = SpawnTransient();
 			source.Play(clip, false, param);
 		}
 
@@ -27,7 +27,7 @@ namespace Exodrifter.Aural
 
 		#region Constructors
 
-		internal static AudioClipHit New(AudioClip clip, VoiceParams param, Vector3? position)
+		internal static AudioClipHit New(AudioClip clip, TransientParams param, Vector3? position)
 		{
 			var helper = New<AudioClipHit>(clip);
 			if (position.HasValue)

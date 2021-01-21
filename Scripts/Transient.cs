@@ -4,17 +4,17 @@ using UnityEngine;
 namespace Exodrifter.Aural
 {
 	/// <summary>
-	/// A voice is responsible for playing an audio file and automatically
-	/// destroying itself when the audio finishes playing.
+	/// Responsible for playing an audio file and automatically destroying
+	/// itself when the audio finishes playing.
 	/// </summary>
 	[AddComponentMenu("")]
 	[Serializable]
-	internal sealed class Voice : MonoBehaviour
+	internal sealed class Transient : MonoBehaviour
 	{
 		#region Automated Parameters
 
 		/// <summary>
-		/// The current volume of the voice.
+		/// The current volume of the transient.
 		/// </summary>
 		internal float Volume
 		{
@@ -25,7 +25,7 @@ namespace Exodrifter.Aural
 		private AutomatedParameter volume;
 
 		/// <summary>
-		/// The current pitch of the voice.
+		/// The current pitch of the transient.
 		/// </summary>
 		internal float Pitch
 		{
@@ -36,8 +36,8 @@ namespace Exodrifter.Aural
 		private AutomatedParameter pitch;
 
 		/// <summary>
-		/// The current stereo panning of the voice between 0 and 1, where 0 is
-		/// left and 1 is right.
+		/// The current stereo panning of the transient between 0 and 1, where 0
+		/// is left and 1 is right.
 		/// </summary>
 		internal float PanStereo
 		{
@@ -48,8 +48,8 @@ namespace Exodrifter.Aural
 		private AutomatedParameter panStereo;
 
 		/// <summary>
-		/// The current spatial blend of the voice between 0 and 1, where 0 is
-		/// 2D and 1 is 3D.
+		/// The current spatial blend of the transient between 0 and 1, where 0
+		/// is 2D and 1 is 3D.
 		/// </summary>
 		internal float SpatialBlend
 		{
@@ -77,7 +77,7 @@ namespace Exodrifter.Aural
 			}
 		}
 
-		internal Voice Play(AudioClip clip, bool loop, VoiceParams param)
+		internal Transient Play(AudioClip clip, bool loop, TransientParams param)
 		{
 			volume = new AutomatedParameter(param.GetVolume(), 0.25f);
 			pitch = new AutomatedParameter(param.GetPitch(), 0.25f);
@@ -106,7 +106,7 @@ namespace Exodrifter.Aural
 			return this;
 		}
 
-		internal Voice Apply(VoiceParams param)
+		internal Transient Apply(TransientParams param)
 		{
 			volume.DesiredValue = param.GetVolume();
 			pitch.DesiredValue = param.GetPitch();

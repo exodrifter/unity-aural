@@ -5,10 +5,11 @@ using UnityEngine.Audio;
 namespace Exodrifter.Aural
 {
 	/// <summary>
-	/// A collection of parameters that can be applied to a <see cref="Voice"/>.
+	/// A collection of parameters that can be applied to a
+	/// <see cref="Transient"/>.
 	/// </summary>
 	[Serializable]
-	public class VoiceParams
+	public class TransientParams
 	{
 		[SerializeField]
 		private FloatVariance volume = FloatVariance.Range(0.8f, 1.0f);
@@ -27,7 +28,7 @@ namespace Exodrifter.Aural
 		[SerializeField]
 		private AudioMixerGroup mixerGroup = default;
 
-		private VoiceParams(Factory f)
+		private TransientParams(Factory f)
 		{
 			volume = f.volume;
 			pitch = f.pitch;
@@ -118,7 +119,7 @@ namespace Exodrifter.Aural
 			internal FloatVariance spatialBlend;
 			internal AudioMixerGroup mixerGroup;
 
-			internal Factory(VoiceParams p = null)
+			internal Factory(TransientParams p = null)
 			{
 				volume = p?.volume ?? FloatVariance.Range(0.8f, 1.0f);
 				pitch = p?.pitch ?? FloatVariance.Variance(1.0f, 0.1f);
@@ -245,24 +246,24 @@ namespace Exodrifter.Aural
 			}
 
 			/// <summary>
-			/// Converts the factory into an <see cref="VoiceParams"/>.
+			/// Converts the factory into an <see cref="TransientParams"/>.
 			/// </summary>
 			/// <param name="factory">The factory to convert.</param>
-			public static implicit operator VoiceParams(Factory factory)
+			public static implicit operator TransientParams(Factory factory)
 			{
-				return new VoiceParams(factory);
+				return new TransientParams(factory);
 			}
 		}
 
 		/// <summary>
 		/// Creates a new factory initialized with either the default values or
-		/// with the values copied from another <see cref="VoiceParams"/>.
+		/// with the values copied from another <see cref="TransientParams"/>.
 		/// </summary>
 		/// <param name="audioParams">
-		/// The <see cref="VoiceParams"/> to copy the initial state from.
+		/// The <see cref="TransientParams"/> to copy the initial state from.
 		/// </param>
 		/// <returns>The factory to modify.</returns>
-		public static Factory Clone(VoiceParams audioParams)
+		public static Factory Clone(TransientParams audioParams)
 		{
 			return new Factory(audioParams);
 		}
