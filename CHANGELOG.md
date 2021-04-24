@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the SoundbankHitPlayer component which can be used to play a one-off
   sound from a soundbank.
 
+### Fixed
+- No longer throws a null reference exception when trying to find a channel
+  with a null object.
+
 ## [0.0.2]
 ### Changed
 - The type of the package has been set to "library"

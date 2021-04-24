@@ -10,6 +10,11 @@ namespace Exodrifter.Aural
 
 		internal static T FindChannel<T>(Object obj) where T : Channel
 		{
+			if (obj == null)
+			{
+				return null;
+			}
+
 			var typeName = typeof(T).GetHashCode();
 			var instanceId = obj.GetInstanceID().ToString();
 
